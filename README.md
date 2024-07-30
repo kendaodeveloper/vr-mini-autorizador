@@ -7,11 +7,13 @@ API em Java com rotas para gerenciamento de cartões e transações.
 - Gradle 8.8
 - Spring 3.3.2
 - MySQL 5.7
+- Flyway
 - Hexagonal Arch
+- Redis (opcional)
 
 # Comandos
 
-Com o Docker instalado, rode o comando `docker-compose up -d` dentro da pasta Docker para baixar os recursos necessários pra executar a aplicação localmente.
+Com o Docker instalado, rode o comando `docker-compose up -d` dentro da pasta `docker` para baixar os recursos necessários pra executar a aplicação localmente.
 
 Para verificar a execução dos recursos, rode o comando `docker ps` para analisar.
 

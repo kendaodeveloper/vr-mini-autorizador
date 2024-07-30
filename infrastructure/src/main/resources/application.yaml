@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: miniautorizador
+    env: ${APPLICATION_ENV:LOCAL}
+  datasource:
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME:com.mysql.cj.jdbc.Driver}
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/miniautorizador}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+  flyway:
+    enabled: ${SPRING_FLYWAY_ENABLED:true}
+    validate-on-migrate: ${SPRING_FLYWAY_VALIDATE_ON_MIGRATE:true}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    database-platform: ${SPRING_JPA_DATABASE_PLATFORM:org.hibernate.dialect.MySQLDialect}
+  security:
+    jwt:
+      secret-key: ${SPRING_SECURITY_JWT_SECRET_KEY:c83f671c-7c3e-4b93-a9b7-95b1375b9c38}
+management:
+  endpoint:
+    health:
+      show-details: always
