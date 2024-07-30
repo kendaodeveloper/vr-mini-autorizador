@@ -16,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cards")
@@ -40,6 +42,23 @@ public class CardEndpointAdapter {
     return CardEndpointMapper.toResponse(
         this.getCardByNumberUseCasePort.execute(number)
     );
+  }
+
+  @GetMapping("/{number}/balance")
+  @Operation(summary = "Get Card Balance By Number")
+  @ApiResponses(
+      value = {
+          @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CardEndpointResponse.class))),
+          @ApiResponse(responseCode = "400", description = "Invalid parameters", content = @Content(schema = @Schema(implementation = ExceptionDto.class))),
+          @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(schema = @Schema(implementation = ExceptionDto.class))),
+          @ApiResponse(responseCode = "404", description = "Card not found", content = @Content(schema = @Schema(implementation = ExceptionDto.class))),
+          @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = ExceptionDto.class)))
+      }
+  )
+  @ResponseStatus(HttpStatus.OK)
+  public BigDecimal getBalanceByNumber(@PathVariable("number") String number) {
+    final var card = this.getCardByNumberUseCasePort.execute(number);
+    return card.getBalance();
   }
 
   @PostMapping

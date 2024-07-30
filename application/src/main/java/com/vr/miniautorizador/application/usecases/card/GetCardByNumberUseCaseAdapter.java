@@ -2,9 +2,7 @@ package com.vr.miniautorizador.application.usecases.card;
 
 import com.vr.miniautorizador.application.usecases.card.exceptions.CardNotFoundException;
 import com.vr.miniautorizador.domain.entities.card.Card;
-import com.vr.miniautorizador.domain.ports.in.card.CreateCardUseCasePort;
 import com.vr.miniautorizador.domain.ports.in.card.GetCardByNumberUseCasePort;
-import com.vr.miniautorizador.domain.ports.out.card.CreateCardGatewayPort;
 import com.vr.miniautorizador.domain.ports.out.card.GetCardByNumberGatewayPort;
 import lombok.RequiredArgsConstructor;
 

@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS card (
   id              CHAR(36)       NOT NULL PRIMARY KEY,
   number          VARCHAR(25)    NOT NULL UNIQUE,
-  password        VARCHAR(10)    NOT NULL,
+  password        VARCHAR(50)    NOT NULL,
   owner_name      VARCHAR(50),
   cvv             VARCHAR(5),
   expiration_date VARCHAR(5),

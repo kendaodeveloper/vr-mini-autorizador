@@ -1,9 +1,6 @@
 package com.vr.miniautorizador.infrastructure.inbound.api.base.advice;
 
-import com.vr.miniautorizador.domain.exceptions.BadRequestException;
-import com.vr.miniautorizador.domain.exceptions.ConflictException;
-import com.vr.miniautorizador.domain.exceptions.MultipleErrorsException;
-import com.vr.miniautorizador.domain.exceptions.NotFoundException;
+import com.vr.miniautorizador.domain.exceptions.*;
 import com.vr.miniautorizador.infrastructure.inbound.api.base.advice.dto.ExceptionDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -96,6 +93,17 @@ public class CustomControllerAdvice {
             e.toString(),
             List.of(e.toString())
         ), HttpStatus.UNSUPPORTED_MEDIA_TYPE
+    );
+  }
+
+  @ExceptionHandler(UnprocessableEntityException.class)
+  public ResponseEntity<ExceptionDto> handleUnprocessableEntityException(UnprocessableEntityException e) {
+    return new ResponseEntity<>(
+        new ExceptionDto(
+            HttpStatus.UNPROCESSABLE_ENTITY.value(),
+            e.toString(),
+            List.of(e.toString())
+        ), HttpStatus.UNPROCESSABLE_ENTITY
     );
   }
 
