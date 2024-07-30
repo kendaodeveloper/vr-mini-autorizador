@@ -33,6 +33,7 @@ public class CardDatabaseGatewayAdapterCreateCardTest {
     final var password = "12321";
     final var cvv = "901";
     final var expirationDate = "01/25";
+    final var ownerName = "João";
     final var balance = new BigDecimal("550.25");
     final var createdAt = LocalDateTime.now().minusHours(5);
     final var updatedAt = LocalDateTime.now();
@@ -43,6 +44,7 @@ public class CardDatabaseGatewayAdapterCreateCardTest {
         .password(password)
         .cvv(cvv)
         .expirationDate(expirationDate)
+        .ownerName(ownerName)
         .balance(balance)
         .createdAt(createdAt)
         .updatedAt(updatedAt)
@@ -58,6 +60,7 @@ public class CardDatabaseGatewayAdapterCreateCardTest {
     Assertions.assertEquals(response.getPassword(), card.getPassword());
     Assertions.assertEquals(response.getCvv(), card.getCvv());
     Assertions.assertEquals(response.getExpirationDate(), card.getExpirationDate());
+    Assertions.assertEquals(response.getOwnerName(), card.getOwnerName());
     Assertions.assertEquals(response.getBalance(), card.getBalance());
     Assertions.assertEquals(response.getCreatedAt(), card.getCreatedAt());
     Assertions.assertNull(response.getUpdatedAt());

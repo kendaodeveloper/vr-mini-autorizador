@@ -10,6 +10,7 @@ API em Java com rotas para gerenciamento de cartões e transações.
 - Flyway
 - Hexagonal Arch
 - Redis (opcional)
+- Swagger
 
 # Comandos
 

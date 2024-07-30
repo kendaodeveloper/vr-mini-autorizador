@@ -14,6 +14,7 @@ public class CardEndpointMapper {
         .password(card.getPassword())
         .cvv(card.getCvv())
         .expirationDate(card.getExpirationDate())
+        .ownerName(card.getOwnerName())
         .balance(card.getBalance())
         .build();
   }
@@ -25,6 +26,7 @@ public class CardEndpointMapper {
         .password(card.getPassword())
         .cvv(card.getCvv())
         .expirationDate(card.getExpirationDate())
+        .ownerName(card.getOwnerName())
         .balance(card.getBalance())
         .build();
   }

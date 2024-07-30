@@ -38,11 +38,11 @@ public class CardEndpointAdapterCreateCardIntegrationTest {
 
   @Test
   public void createCardWhenIsCreated() throws Throwable {
-    final var id = UUID.randomUUID();
     final var number = "374245455400126";
     final var password = "12321";
     final var cvv = "901";
     final var expirationDate = "01/25";
+    final var ownerName = "João";
     final var balance = new BigDecimal("550.25");
 
     final var cardRequest = CardEndpointRequest.builder()
@@ -50,6 +50,7 @@ public class CardEndpointAdapterCreateCardIntegrationTest {
         .password(password)
         .cvv(cvv)
         .expirationDate(expirationDate)
+        .ownerName(ownerName)
         .balance(balance)
         .build();
 
@@ -59,6 +60,7 @@ public class CardEndpointAdapterCreateCardIntegrationTest {
         .password(password)
         .cvv(cvv)
         .expirationDate(expirationDate)
+        .ownerName(ownerName)
         .balance(balance)
         .build();
 

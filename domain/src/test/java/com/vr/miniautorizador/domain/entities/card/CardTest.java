@@ -15,6 +15,7 @@ public class CardTest {
     final var password = "12321";
     final var cvv = "901";
     final var expirationDate = "01/25";
+    final var ownerName = "João";
     final var balance = new BigDecimal("550.25");
     final var createdAt = LocalDateTime.now().minusHours(5);
     final var updatedAt = LocalDateTime.now();
@@ -25,6 +26,7 @@ public class CardTest {
         .password(password)
         .cvv(cvv)
         .expirationDate(expirationDate)
+        .ownerName(ownerName)
         .balance(balance)
         .createdAt(createdAt)
         .updatedAt(updatedAt)
@@ -36,6 +38,7 @@ public class CardTest {
     Assertions.assertEquals(card.getPassword(), password);
     Assertions.assertEquals(card.getCvv(), cvv);
     Assertions.assertEquals(card.getExpirationDate(), expirationDate);
+    Assertions.assertEquals(card.getOwnerName(), ownerName);
     Assertions.assertEquals(card.getBalance(), balance);
     Assertions.assertEquals(card.getCreatedAt(), createdAt);
     Assertions.assertEquals(card.getUpdatedAt(), updatedAt);
@@ -49,6 +52,7 @@ public class CardTest {
         .password(null)
         .cvv(null)
         .expirationDate(null)
+        .ownerName(null)
         .balance(null)
         .createdAt(null)
         .updatedAt(null)
@@ -60,6 +64,7 @@ public class CardTest {
     Assertions.assertNull(card.getPassword());
     Assertions.assertNull(card.getCvv());
     Assertions.assertNull(card.getExpirationDate());
+    Assertions.assertNull(card.getOwnerName());
     Assertions.assertNull(card.getBalance());
     Assertions.assertNull(card.getCreatedAt());
     Assertions.assertNull(card.getUpdatedAt());

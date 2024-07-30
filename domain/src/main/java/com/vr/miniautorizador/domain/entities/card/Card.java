@@ -22,6 +22,7 @@ public class Card extends Entity<UUID> implements Serializable {
   private String password;
   private String cvv;
   private String expirationDate;
+  private String ownerName;
   private BigDecimal balance;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;

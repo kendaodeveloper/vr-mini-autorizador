@@ -30,7 +30,7 @@ public class SwaggerConfiguration {
   public OpenAPI openAPI() {
     return new OpenAPI().info(
         new Info()
-            .title("Mercado Livre - Card API")
+            .title("VR - API de Gerenciamento de cartões e transações")
             .description(
                 Environment.LOCAL.equals(this.env) ?
                     ("Valid Token for tests:" + "<br/>" + JwtUtil.generateEncodedJwt(this.jwtSecretKey)) : ""

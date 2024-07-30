@@ -1,6 +1,7 @@
 package com.vr.miniautorizador.infrastructure.inbound.api.card;
 
 import com.vr.miniautorizador.domain.ports.in.card.CreateCardUseCasePort;
+import com.vr.miniautorizador.domain.ports.in.card.GetCardByNumberUseCasePort;
 import com.vr.miniautorizador.infrastructure.inbound.api.base.advice.dto.ExceptionDto;
 import com.vr.miniautorizador.infrastructure.inbound.api.card.dto.CardEndpointRequest;
 import com.vr.miniautorizador.infrastructure.inbound.api.card.dto.CardEndpointResponse;
@@ -20,10 +21,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/cards")
 @Tag(name = "Card Endpoint", description = "/cards")
 public class CardEndpointAdapter {
+  private final GetCardByNumberUseCasePort getCardByNumberUseCasePort;
   private final CreateCardUseCasePort createCardUseCasePort;
 
-  @GetMapping("/{id}")
-  @Operation(summary = "Get Card By ID")
+  @GetMapping("/{number}")
+  @Operation(summary = "Get Card By Number")
   @ApiResponses(
       value = {
           @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CardEndpointResponse.class))),
@@ -35,8 +37,9 @@ public class CardEndpointAdapter {
   )
   @ResponseStatus(HttpStatus.OK)
   public CardEndpointResponse getByNumber(@PathVariable("number") String number) {
-    // TODO: Implement this
-    return null;
+    return CardEndpointMapper.toResponse(
+        this.getCardByNumberUseCasePort.execute(number)
+    );
   }
 
   @PostMapping

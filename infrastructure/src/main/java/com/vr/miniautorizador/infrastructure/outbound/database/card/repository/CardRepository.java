@@ -4,8 +4,10 @@ import com.vr.miniautorizador.infrastructure.outbound.database.card.table.CardTa
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface CardRepository extends JpaRepository<CardTable, UUID> {
+  Optional<CardTable> findOneByNumber(String number);
 }

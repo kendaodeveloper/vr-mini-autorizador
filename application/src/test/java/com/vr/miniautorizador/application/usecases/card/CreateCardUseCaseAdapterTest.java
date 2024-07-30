@@ -32,6 +32,7 @@ public class CreateCardUseCaseAdapterTest {
     final var password = "12321";
     final var cvv = "901";
     final var expirationDate = "01/25";
+    final var ownerName = "João";
     final var balance = new BigDecimal("550.25");
     final var createdAt = LocalDateTime.now().minusHours(5);
     final var updatedAt = LocalDateTime.now();
@@ -42,6 +43,7 @@ public class CreateCardUseCaseAdapterTest {
         .password(password)
         .cvv(cvv)
         .expirationDate(expirationDate)
+        .ownerName(ownerName)
         .balance(balance)
         .createdAt(createdAt)
         .updatedAt(updatedAt)
@@ -53,6 +55,7 @@ public class CreateCardUseCaseAdapterTest {
         .password(password)
         .cvv(cvv)
         .expirationDate(expirationDate)
+        .ownerName(ownerName)
         .balance(balance)
         .createdAt(createdAt)
         .updatedAt(updatedAt)

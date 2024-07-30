@@ -35,6 +35,9 @@ public class CardTable {
   @Column(name = "expiration_date")
   private String expirationDate;
 
+  @Column(name = "owner_name")
+  private String ownerName;
+
   @Column(nullable = false)
   private BigDecimal balance;
 
