@@ -11,7 +11,7 @@ public class TransactionEndpointMapper {
     return Transaction.builder()
         .cardNumber(transaction.getCardNumber())
         .cardPassword(transaction.getCardPassword())
-        .value(transaction.getValue())
+        .amount(transaction.getAmount())
         .build();
   }
 }

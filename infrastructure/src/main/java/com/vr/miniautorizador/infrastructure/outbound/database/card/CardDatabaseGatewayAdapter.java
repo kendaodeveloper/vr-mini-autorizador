@@ -5,7 +5,6 @@ import com.vr.miniautorizador.domain.ports.out.card.CreateCardGatewayPort;
 import com.vr.miniautorizador.domain.ports.out.card.GetCardByNumberGatewayPort;
 import com.vr.miniautorizador.domain.ports.out.card.UpdateCardBalanceByIdGatewayPort;
 import com.vr.miniautorizador.infrastructure.outbound.database.card.exceptions.CardAlreadyExistsException;
-import com.vr.miniautorizador.infrastructure.outbound.database.card.exceptions.CardNotFoundException;
 import com.vr.miniautorizador.infrastructure.outbound.database.card.mapper.CardTableMapper;
 import com.vr.miniautorizador.infrastructure.outbound.database.card.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
@@ -46,11 +45,8 @@ public class CardDatabaseGatewayAdapter implements
   }
 
   @Override
-  public void updateCardBalanceById(UUID id, BigDecimal balance) {
-    final var card = this.cardRepository.findById(id).orElseThrow(CardNotFoundException::new);
-
-    card.setBalance(balance);
-
-    this.cardRepository.saveAndFlush(card);
+  public Boolean updateCardBalanceById(UUID id, BigDecimal amount) {
+    Integer updatedRows = this.cardRepository.updateCardBalanceIfSufficient(id, amount);
+    return updatedRows > 0;
   }
 }

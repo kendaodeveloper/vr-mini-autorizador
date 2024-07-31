@@ -18,5 +18,5 @@ public class TransactionEndpointRequest {
   @JsonProperty("senhaCartao")
   private String cardPassword;
   @JsonProperty("valor")
-  private BigDecimal value;
+  private BigDecimal amount;
 }

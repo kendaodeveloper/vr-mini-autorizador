@@ -4,5 +4,5 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public interface UpdateCardBalanceByIdGatewayPort {
-  void updateCardBalanceById(UUID id, BigDecimal balance);
+  Boolean updateCardBalanceById(UUID id, BigDecimal amount);
 }

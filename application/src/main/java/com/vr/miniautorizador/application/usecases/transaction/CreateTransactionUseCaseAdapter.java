@@ -11,8 +11,6 @@ import com.vr.miniautorizador.domain.ports.out.card.UpdateCardBalanceByIdGateway
 import com.vr.miniautorizador.domain.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 
-import java.math.BigDecimal;
-
 @RequiredArgsConstructor
 public class CreateTransactionUseCaseAdapter implements CreateTransactionUseCasePort {
   private final GetCardByNumberGatewayPort getCardByNumberGatewayPort;
@@ -29,13 +27,9 @@ public class CreateTransactionUseCaseAdapter implements CreateTransactionUseCase
         throw new InvalidCardPasswordException();
       }
 
-      final var balance = card.getBalance().subtract(transaction.getValue());
-
-      if (balance.compareTo(new BigDecimal(0)) < 0) {
+      if (!this.updateCardBalanceByIdGatewayPort.updateCardBalanceById(card.getId(), transaction.getAmount())) {
         throw new InsufficientFundsException();
       }
-
-      this.updateCardBalanceByIdGatewayPort.updateCardBalanceById(card.getId(), balance);
 
       return TransactionStatus.CREATED.getText();
     } catch (Throwable t) {

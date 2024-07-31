@@ -19,5 +19,5 @@ import java.util.UUID;
 public class Transaction extends Entity<UUID> implements Serializable {
   private String cardNumber;
   private String cardPassword;
-  private BigDecimal value;
+  private BigDecimal amount;
 }
