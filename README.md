@@ -1,4 +1,5 @@
 # VR - Mini Autorizador
+
 API em Java com rotas para gerenciamento de cartões e transações.
 
 # Tecnologias
@@ -9,8 +10,8 @@ API em Java com rotas para gerenciamento de cartões e transações.
 - MySQL 5.7
 - Flyway
 - Hexagonal Arch
-- Redis (opcional)
 - Swagger
+- Jacoco
 
 # Comandos
 
