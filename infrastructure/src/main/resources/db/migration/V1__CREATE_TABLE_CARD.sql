@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS card (
   owner_name      VARCHAR(50),
   cvv             VARCHAR(5),
   expiration_date VARCHAR(5),
-  balance         DECIMAL(10, 2) NOT NULL DEFAULT 0,
+  balance         DECIMAL(15, 2) NOT NULL DEFAULT 0,
   created_at      TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at      TIMESTAMP               DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;

@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-public class CardDatabaseGatewayAdapterCreateCardTest {
+public class CardDatabaseGatewayAdapterTest {
   @InjectMocks
   private CardDatabaseGatewayAdapter adapter;
   @Mock
