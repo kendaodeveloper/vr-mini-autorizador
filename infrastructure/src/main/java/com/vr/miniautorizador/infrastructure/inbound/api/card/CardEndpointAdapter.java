@@ -15,17 +15,20 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
+@Validated
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cartoes")
-@Tag(name = "Card Endpoint", description = "/cards")
+@Tag(name = "Card Endpoint", description = "/cartoes")
 public class CardEndpointAdapter {
   private final GetCardByNumberUseCasePort getCardByNumberUseCasePort;
   private final CreateCardUseCasePort createCardUseCasePort;
@@ -42,7 +45,7 @@ public class CardEndpointAdapter {
       }
   )
   public ResponseEntity<CardEndpointResponse> create(
-      @RequestBody CardEndpointRequest request
+      @RequestBody @Valid CardEndpointRequest request
   ) {
     final Pair<Card, Boolean> pair = this.createCardUseCasePort.execute(
         CardEndpointMapper.toEntity(request)

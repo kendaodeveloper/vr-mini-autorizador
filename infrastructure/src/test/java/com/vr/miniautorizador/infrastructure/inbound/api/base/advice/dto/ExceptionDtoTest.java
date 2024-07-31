@@ -9,9 +9,9 @@ import java.util.List;
 
 public class ExceptionDtoTest {
   @Test
-  public void instantiateCardTableWithNonNullValues() {
+  public void instantiateExceptionDtoWithNonNullValues() {
     final var status = HttpStatus.CONFLICT.value();
-    final var exception = new ConflictException("Card already exists");
+    final var exception = new ConflictException("Entity already exists");
     final var dto = new ExceptionDto(
         status,
         exception.toString(),
@@ -25,7 +25,7 @@ public class ExceptionDtoTest {
   }
 
   @Test
-  public void instantiateCardTableWithNullValues() {
+  public void instantiateExceptionDtoWithNullValues() {
     final var dto = new ExceptionDto(
         null,
         null,

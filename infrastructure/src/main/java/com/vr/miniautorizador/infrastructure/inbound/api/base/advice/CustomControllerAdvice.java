@@ -8,6 +8,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,10 +24,11 @@ public class CustomControllerAdvice {
       HttpMessageNotReadableException.class,
       MethodArgumentTypeMismatchException.class,
       MissingServletRequestParameterException.class,
+      MethodArgumentNotValidException.class,
       BadRequestException.class,
       MultipleErrorsException.class
   })
-  public ResponseEntity<ExceptionDto> handleBadRequestException(RuntimeException e) {
+  public ResponseEntity<ExceptionDto> handleBadRequestException(Throwable e) {
     return new ResponseEntity<>(
         new ExceptionDto(
             HttpStatus.BAD_REQUEST.value(),
@@ -42,7 +44,7 @@ public class CustomControllerAdvice {
       NoResourceFoundException.class,
       NotFoundException.class
   })
-  public ResponseEntity<ExceptionDto> handleNotFoundException(NotFoundException e) {
+  public ResponseEntity<ExceptionDto> handleNotFoundException(Throwable e) {
     return new ResponseEntity<>(
         new ExceptionDto(
             HttpStatus.NOT_FOUND.value(),
@@ -53,7 +55,7 @@ public class CustomControllerAdvice {
   }
 
   @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-  public ResponseEntity<ExceptionDto> handleMethodNotAllowedException(HttpRequestMethodNotSupportedException e) {
+  public ResponseEntity<ExceptionDto> handleMethodNotAllowedException(Throwable e) {
     return new ResponseEntity<>(
         new ExceptionDto(
             HttpStatus.METHOD_NOT_ALLOWED.value(),
@@ -64,7 +66,7 @@ public class CustomControllerAdvice {
   }
 
   @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
-  public ResponseEntity<ExceptionDto> handleNotAcceptableException(HttpMediaTypeNotAcceptableException e) {
+  public ResponseEntity<ExceptionDto> handleNotAcceptableException(Throwable e) {
     return new ResponseEntity<>(
         new ExceptionDto(
             HttpStatus.NOT_ACCEPTABLE.value(),
@@ -75,7 +77,7 @@ public class CustomControllerAdvice {
   }
 
   @ExceptionHandler(ConflictException.class)
-  public ResponseEntity<ExceptionDto> handleConflictException(ConflictException e) {
+  public ResponseEntity<ExceptionDto> handleConflictException(Throwable e) {
     return new ResponseEntity<>(
         new ExceptionDto(
             HttpStatus.CONFLICT.value(),
@@ -86,7 +88,7 @@ public class CustomControllerAdvice {
   }
 
   @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
-  public ResponseEntity<ExceptionDto> handleUnsupportedMediaTypeException(HttpMediaTypeNotSupportedException e) {
+  public ResponseEntity<ExceptionDto> handleUnsupportedMediaTypeException(Throwable e) {
     return new ResponseEntity<>(
         new ExceptionDto(
             HttpStatus.UNSUPPORTED_MEDIA_TYPE.value(),
@@ -97,7 +99,7 @@ public class CustomControllerAdvice {
   }
 
   @ExceptionHandler(UnprocessableEntityException.class)
-  public ResponseEntity<ExceptionDto> handleUnprocessableEntityException(UnprocessableEntityException e) {
+  public ResponseEntity<ExceptionDto> handleUnprocessableEntityException(Throwable e) {
     return new ResponseEntity<>(
         new ExceptionDto(
             HttpStatus.UNPROCESSABLE_ENTITY.value(),

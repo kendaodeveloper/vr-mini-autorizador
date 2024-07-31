@@ -1,6 +1,8 @@
 package com.vr.miniautorizador.infrastructure.inbound.api.card.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +15,12 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CardEndpointRequest {
+  @NotNull
+  @NotEmpty
   @JsonProperty("numeroCartao")
   private String number;
+  @NotNull
+  @NotEmpty
   @JsonProperty("senha")
   private String password;
   @JsonProperty("cvv")

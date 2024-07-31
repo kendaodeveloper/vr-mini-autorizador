@@ -11,18 +11,21 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Validated
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/transacoes")
-@Tag(name = "Transaction Endpoint", description = "/transactions")
+@Tag(name = "Transaction Endpoint", description = "/transacoes")
 public class TransactionEndpointAdapter {
   private final CreateTransactionUseCasePort createTransactionUseCasePort;
 
@@ -38,7 +41,7 @@ public class TransactionEndpointAdapter {
       }
   )
   public ResponseEntity<String> create(
-      @RequestBody TransactionEndpointRequest request
+      @RequestBody @Valid TransactionEndpointRequest request
   ) {
     final var response = this.createTransactionUseCasePort.execute(TransactionEndpointMapper.toEntity(request));
     return ResponseEntity.status(TransactionStatus.CREATED.getText().equals(response) ? HttpStatus.OK : HttpStatus.UNPROCESSABLE_ENTITY).body(response);
