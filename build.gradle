@@ -1,16 +1,18 @@
 plugins {
     id 'java'
+    id 'jacoco'
+}
+
+allprojects {
+    apply plugin: "jacoco"
 }
 
 group = 'com.vr'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '22'
-    targetCompatibility = '22'
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(22)
-    }
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
 }
 
 repositories {
@@ -25,4 +27,48 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+jacoco {
+    toolVersion = "0.8.9"
+}
+
+tasks.register('jacocoMergeAll', JacocoMerge) {
+    dependsOn(subprojects.test, subprojects.jacocoTestReport)
+
+    subprojects.each { subproject ->
+        executionData subproject.tasks.withType(Test)
+    }
+}
+
+tasks.register('jacocoRootReport', JacocoReport) {
+    dependsOn(jacocoMergeAll)
+
+    additionalSourceDirs.from = files(subprojects.sourceSets.main.allSource.srcDirs)
+    sourceDirectories.from = files(subprojects.sourceSets.main.allSource.srcDirs)
+    classDirectories.from = files(subprojects.sourceSets.main.output).collect {
+        fileTree(dir: it, exclude: [
+                '**/dto/**',
+                '**/enumerable/**',
+                '**/entities/**',
+                '**/table/**',
+                '**/configuration/**',
+                '**/advice/**',
+                '**/StartApplication.java',
+                '**/StartApplication.class'
+        ])
+    }
+    executionData.from = files("${buildDir}/jacoco/jacocoMergeAll.exec")
+
+    reports {
+        html {
+            enabled = true
+            destination = file("${buildDir}/jacoco/html")
+        }
+        xml {
+            enabled = true
+            destination = file("${buildDir}/jacoco/report.xml")
+        }
+        csv.enabled = false
+    }
 }

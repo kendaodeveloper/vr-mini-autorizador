@@ -4,14 +4,16 @@ API em Java com rotas para gerenciamento de cartões e transações.
 
 # Tecnologias
 
-- Java 22
-- Gradle 8.8
+- Java 17
+- Gradle 7.6.3
 - Spring 3.3.2
-- MySQL 5.7
-- Flyway
-- Hexagonal Arch
+- MySQL 5.7 + Flyway
 - Swagger
 - Jacoco
+
+# Arquitetura
+
+- Hexagonal Arch
 
 # Comandos
 
