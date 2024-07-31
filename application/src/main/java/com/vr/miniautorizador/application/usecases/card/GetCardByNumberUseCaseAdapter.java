@@ -12,7 +12,7 @@ public class GetCardByNumberUseCaseAdapter implements GetCardByNumberUseCasePort
 
   @Override
   public Card execute(String cardNumber) {
-    final var card = this.getCardByNumberGatewayPort.getCardByNumber(cardNumber);
-    return card.orElseThrow(CardNotFoundException::new);
+    return this.getCardByNumberGatewayPort.getCardByNumber(cardNumber)
+        .orElseThrow(CardNotFoundException::new);
   }
 }

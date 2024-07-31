@@ -30,9 +30,9 @@ public class ExceptionManagerTest {
   public void validateExceptionManagerWhenHasMultipleExceptions() {
     final var exceptionManager = new ExceptionManager();
 
-    exceptionManager.addException(new NotFoundException("abc"));
     exceptionManager.addException(new BadRequestException("123"));
     exceptionManager.addException(new ConflictException("xpto"));
+    exceptionManager.addException(new NotFoundException("abc"));
     exceptionManager.addException(new UnprocessableEntityException("010"));
 
     final var exception = Assertions.assertThrows(
@@ -43,9 +43,9 @@ public class ExceptionManagerTest {
     Assertions.assertEquals(exception.getMessage(), "Multiple Errors");
     Assertions.assertInstanceOf(MultipleErrorsException.class, exception);
     Assertions.assertEquals(((MultipleErrorsException) exception).getExceptions().size(), 4);
-    Assertions.assertEquals(((MultipleErrorsException) exception).getExceptions().get(0).getMessage(), "abc");
-    Assertions.assertEquals(((MultipleErrorsException) exception).getExceptions().get(1).getMessage(), "123");
-    Assertions.assertEquals(((MultipleErrorsException) exception).getExceptions().get(2).getMessage(), "xpto");
+    Assertions.assertEquals(((MultipleErrorsException) exception).getExceptions().get(0).getMessage(), "123");
+    Assertions.assertEquals(((MultipleErrorsException) exception).getExceptions().get(1).getMessage(), "xpto");
+    Assertions.assertEquals(((MultipleErrorsException) exception).getExceptions().get(2).getMessage(), "abc");
     Assertions.assertEquals(((MultipleErrorsException) exception).getExceptions().get(3).getMessage(), "010");
   }
 }
