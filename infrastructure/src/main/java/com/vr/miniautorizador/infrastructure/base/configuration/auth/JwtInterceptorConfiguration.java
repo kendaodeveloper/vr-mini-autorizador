@@ -29,13 +29,16 @@ public class JwtInterceptorConfiguration extends OncePerRequestFilter {
       "/actuator/health"
   );
 
+  private final Boolean jwtEnabled;
   private final UUID jwtSecretKey;
   private final ObjectMapper objectMapper;
 
   public JwtInterceptorConfiguration(
+      @Value("${spring.security.jwt.enabled}") final Boolean jwtEnabled,
       @Value("${spring.security.jwt.secret-key}") final UUID jwtSecretKey,
       final ObjectMapper objectMapper
   ) {
+    this.jwtEnabled = jwtEnabled;
     this.jwtSecretKey = jwtSecretKey;
     this.objectMapper = objectMapper;
   }
@@ -47,7 +50,8 @@ public class JwtInterceptorConfiguration extends OncePerRequestFilter {
       FilterChain filterChain
   ) throws IOException, ServletException {
     if (
-        !this.isIgnoredPath(request.getRequestURI()) &&
+        this.jwtEnabled &&
+            !this.isIgnoredPath(request.getRequestURI()) &&
             !JwtUtil.isValidJwt(this.jwtSecretKey, request.getHeader("Authorization"))
     ) {
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

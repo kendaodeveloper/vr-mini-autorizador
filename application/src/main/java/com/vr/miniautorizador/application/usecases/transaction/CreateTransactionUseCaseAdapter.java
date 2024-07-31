@@ -4,6 +4,7 @@ import com.vr.miniautorizador.application.usecases.transaction.exceptions.Insuff
 import com.vr.miniautorizador.application.usecases.transaction.exceptions.InvalidCardPasswordException;
 import com.vr.miniautorizador.application.usecases.transaction.exceptions.TransactionCardNotFoundException;
 import com.vr.miniautorizador.domain.entities.transaction.Transaction;
+import com.vr.miniautorizador.domain.entities.transaction.TransactionStatus;
 import com.vr.miniautorizador.domain.ports.in.transaction.CreateTransactionUseCasePort;
 import com.vr.miniautorizador.domain.ports.out.card.GetCardByNumberGatewayPort;
 import com.vr.miniautorizador.domain.ports.out.card.UpdateCardBalanceByIdGatewayPort;
@@ -19,22 +20,38 @@ public class CreateTransactionUseCaseAdapter implements CreateTransactionUseCase
 
   @Override
   public String execute(Transaction transaction) {
-    final var card =
-        this.getCardByNumberGatewayPort.getCardByNumber(transaction.getCardNumber())
-            .orElseThrow(TransactionCardNotFoundException::new);
+    try {
+      final var card =
+          this.getCardByNumberGatewayPort.getCardByNumber(transaction.getCardNumber())
+              .orElseThrow(TransactionCardNotFoundException::new);
 
-    if (!(PasswordUtil.encrypt(transaction.getCardPassword()).equals(card.getPassword()))) {
-      throw new InvalidCardPasswordException();
+      if (!(PasswordUtil.encrypt(transaction.getCardPassword()).equals(card.getPassword()))) {
+        throw new InvalidCardPasswordException();
+      }
+
+      final var balance = card.getBalance().subtract(transaction.getValue());
+
+      if (balance.compareTo(new BigDecimal(0)) < 0) {
+        throw new InsufficientFundsException();
+      }
+
+      this.updateCardBalanceByIdGatewayPort.updateCardBalanceById(card.getId(), balance);
+
+      return TransactionStatus.CREATED.getText();
+    } catch (Throwable t) {
+      return this.parseExceptionToString(t);
     }
+  }
 
-    final var balance = card.getBalance().subtract(transaction.getValue());
-
-    if (balance.compareTo(new BigDecimal(0)) < 0) {
-      throw new InsufficientFundsException();
+  private String parseExceptionToString(Throwable t) {
+    if (t instanceof InsufficientFundsException) {
+      return TransactionStatus.INSUFFICIENT_FUNDS.getText();
+    } else if (t instanceof InvalidCardPasswordException) {
+      return TransactionStatus.INVALID_CARD_PASSWORD.getText();
+    } else if (t instanceof TransactionCardNotFoundException) {
+      return TransactionStatus.CARD_NOT_FOUND.getText();
+    } else {
+      return TransactionStatus.UNEXPECTED_ERROR.getText();
     }
-
-    this.updateCardBalanceByIdGatewayPort.updateCardBalanceById(card.getId(), balance);
-
-    return "OK";
   }
 }

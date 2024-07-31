@@ -20,6 +20,7 @@ spring:
     database-platform: ${SPRING_JPA_DATABASE_PLATFORM:org.hibernate.dialect.MySQLDialect}
   security:
     jwt:
+      enabled: ${SPRING_SECURITY_JWT_ENABLED:false}
       secret-key: ${SPRING_SECURITY_JWT_SECRET_KEY:c83f671c-7c3e-4b93-a9b7-95b1375b9c38}
 management:
   endpoint:

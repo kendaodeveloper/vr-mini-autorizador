@@ -22,9 +22,11 @@ public class CardUseCasesConfiguration {
 
   @Bean
   public CreateCardUseCasePort createCardUseCasePort(
+      final GetCardByNumberGatewayPort getCardByNumberGatewayPort,
       final CreateCardGatewayPort createCardGatewayPort
   ) {
     return new CreateCardUseCaseAdapter(
+        getCardByNumberGatewayPort,
         createCardGatewayPort
     );
   }
