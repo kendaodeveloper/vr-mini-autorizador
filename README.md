@@ -66,10 +66,11 @@ Para obter o resultado da cobertura dos testes (localizado na pasta [jacoco](./b
 Para rodar o projeto via terminal, execute o comando:
 
 ```shell
-./gradlew bootRun
+./gradlew clean bootRun
 ```
 
-Se der certo, aparecerá a seguinte mensagem: `Started StartApplication in {time} seconds`. Por padrão, a aplicação
+Se der certo, serão aplicadas as migrations no banco de dados (caso necessário) e aparecerá a seguinte
+mensagem: `Started StartApplication in {time} seconds`. Por padrão, a aplicação
 utiliza a porta 8080 (setado no arquivo de configurações).
 
 # Endpoints
@@ -112,8 +113,10 @@ curl -X 'POST' 'http://localhost:8080/cartoes' \
 }'
 ```
 
-Este endpoint tenta criar um novo cartão com os dados informados. Caso o saldo não venha preenchido, o valor padrão é de
-500 reais. Se a requisição der sucesso, será retornado o status 201, mas caso o cartão já exista, será retornado o
+Este endpoint tenta criar um novo cartão com os dados informados, sendo que apenas o número do cartão e a senha são
+obrigatórios. Caso o saldo não venha preenchido, será setado o valor padrão de
+500 reais no cartão. Se a requisição der sucesso, será retornado o status 201, mas caso o cartão já exista, será
+retornado o
 status 422.
 
 ## Obter Saldo do Cartão
@@ -121,10 +124,11 @@ status 422.
 Exemplo de cURL:
 
 ```shell
-curl -X 'GET' 'http://localhost:8080/cartoes/{numeroCartao}' -H 'Authorization: Bearer xpto'
+curl -X 'GET' 'http://localhost:8080/cartoes/1234512345' -H 'Authorization: Bearer xpto'
 ```
 
-Este endpoint realiza a busca de saldo de um cartão. Caso o cartão exista, será retornado o status 200 junto com o
+Este endpoint realiza a busca de saldo do cartão informado na URL. Caso o cartão exista, será retornado o status 200
+junto com o
 saldo, caso não exista, será retornado o status 404 com o corpo vazio.
 
 ## Criação de Transação
@@ -143,7 +147,7 @@ curl -X 'POST' 'http://localhost:8080/transacoes' \
 ```
 
 Este endpoint realiza uma transação baseada nos dados informados. Se der sucesso, será retornado status 200 com a
-mensagem `OK`. Caso der algum erro, será retornado status 4022 com algumas das possíveis
+mensagem `OK`, se der algum erro, será retornado status 422 com algumas destas
 mensagens: `SALDO_INSUFICIENTE`, `SENHA_INVALIDA`, `CARTAO_INEXISTENTE` e `ERRO_INESPERADO`.
 
 # Arquitetura
